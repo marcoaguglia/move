@@ -4,6 +4,7 @@ package com.unisalento.move.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -88,7 +89,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers("/public/**").permitAll()
+                .antMatchers(HttpMethod.GET, "api").permitAll()
+
+                .antMatchers(HttpMethod.POST, "api/login/**").permitAll()
+/***************RASP******************/
+
+                .antMatchers(HttpMethod.POST, "api/containers/**").hasAuthority("ROLE_RASP")
+/***************USERS******************/
+
+
+/***************MANAGER******************/
+                .antMatchers("api/containers/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers("api/hub/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers("api/truck/**").hasAuthority("ROLE_MANAGER")
+
+                .antMatchers(HttpMethod.DELETE, "api/users/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers(HttpMethod.POST, "api/users/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers(HttpMethod.PUT, "api/users/**").hasAuthority("ROLE_MANAGER")
+/***************ADMIN******************/
+
+                .antMatchers("api/containers/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("api/hub/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("api/truck/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("api/users/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("api/users/**").hasAuthority("ROLE_ADMIN")
+
                 .anyRequest().authenticated();
 
         // Filtro Custom JWT

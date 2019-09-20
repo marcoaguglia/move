@@ -1,7 +1,7 @@
 package com.unisalento.move.controller;
 
-import com.unisalento.move.model.Track;
 import com.unisalento.move.exeption.TrackNotFoundException;
+import com.unisalento.move.model.Track;
 import com.unisalento.move.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +20,12 @@ public class TrackController {
         this.trackService = trackService;
     }
 
-    @GetMapping("/protected/tracks")
+    @GetMapping("/api/protected/tracks")
     public List<Track> getAllDevices() {
         return trackService.getAllTracks();
     }
 
-    @GetMapping("/protected/tracks/{id}")
+    @GetMapping("/api/protected/tracks/{id}")
     public Track getDeviceById(@PathVariable String id) {
         Track track = trackService.getTrackById(id);
 

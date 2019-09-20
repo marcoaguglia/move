@@ -23,17 +23,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("public/addUsers")
+    @GetMapping("api/users/addUsers")
     public String getAddUsers() {
         return "addUser";
     }
 
-    @GetMapping("protected/users")
+    @GetMapping("api/users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("protected/users/{username}")
+    @GetMapping("api//users/{username}")
     public User getUser(@PathVariable String username) {
         return userService.getUser(username);
     }
@@ -41,7 +41,7 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @PostMapping("protected/users")
+    @PostMapping("api/users")
     public ResponseEntity<Object> addUser(@RequestBody User user, UserRepository userRepository) {
 
 
@@ -63,7 +63,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping("protected/users/{username}")
+    @DeleteMapping("api/users/{username}")
     public User deleteUserById(@PathVariable String username) {
         User user = userService.deleteUser(username);
 

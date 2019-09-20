@@ -1,7 +1,7 @@
 package com.unisalento.move.controller;
 
-import com.unisalento.move.model.Hub;
 import com.unisalento.move.exeption.HubNotFoundException;
+import com.unisalento.move.model.Hub;
 import com.unisalento.move.service.HubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +21,12 @@ public class HubController {
         this.hubService = hubService;
     }
 
-    @GetMapping("/protected/hubs")
+    @GetMapping("api/protected/hubs")
     public List<Hub> getAllDevices() {
         return hubService.getAllHubs();
     }
 
-    @GetMapping("/protected/hubs/{id}")
+    @GetMapping("api/protected/hubs/{id}")
     public Hub getDeviceById(@PathVariable String id) {
         Hub hub = hubService.getHubById(id);
 
@@ -36,7 +36,7 @@ public class HubController {
         return hub;
     }
 
-    @PostMapping("/protected/hubs")
+    @PostMapping("api/protected/hubs")
     public ResponseEntity<Object> addHub(@RequestBody Hub hub) {
         Hub createdHub = hubService.saveHub(hub);
 
@@ -50,10 +50,7 @@ public class HubController {
     }
 
 
-
-
-
-    @DeleteMapping("/hubs/{id}")
+    @DeleteMapping("api/hubs/{id}")
     public Hub deleteHubById(@PathVariable String id) {
         Hub hub = hubService.deleteHub(id);
 
@@ -63,7 +60,7 @@ public class HubController {
         return hub;
     }
 
-    @PutMapping("/hubs/{id}")
+    @PutMapping("api/hubs/{id}")
     public void deleteHubById(@PathVariable String id, @RequestBody Hub hub) {
         Hub foundHub = hubService.getHubById(id);
 

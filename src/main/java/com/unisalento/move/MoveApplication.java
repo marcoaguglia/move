@@ -1,10 +1,10 @@
 package com.unisalento.move;
 
-import com.unisalento.move.repository.AuthorityRepository;
-import com.unisalento.move.repository.UserRepository;
 import com.unisalento.move.model.Authority;
 import com.unisalento.move.model.AuthorityName;
 import com.unisalento.move.model.User;
+import com.unisalento.move.repository.AuthorityRepository;
+import com.unisalento.move.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -53,8 +53,16 @@ public class MoveApplication {
                 authorityUser.setName(AuthorityName.ROLE_USER);
                 authorityUser=authorityRepository.save(authorityUser);
 
+                Authority authorityRasp = new Authority();
+                authorityRasp.setName(AuthorityName.ROLE_RASP);
+                authorityRasp = authorityRepository.save(authorityRasp);
 
-                List<Authority> authorities = Arrays.asList(authorityAdmin,authorityUser);
+                Authority authorityManager = new Authority();
+                authorityManager.setName(AuthorityName.ROLE_MANAGER);
+                authorityManager = authorityRepository.save(authorityManager);
+
+
+                List<Authority> authorities = Arrays.asList(authorityAdmin, authorityUser, authorityManager, authorityRasp);
 
 
                 user = new User();

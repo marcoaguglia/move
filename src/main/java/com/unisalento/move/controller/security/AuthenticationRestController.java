@@ -4,15 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.unisalento.move.security.JwtAuthenticationRequest;
 import com.unisalento.move.security.JwtTokenUtil;
 import com.unisalento.move.service.JwtAuthenticationResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,14 +40,15 @@ public class AuthenticationRestController {
         this.userDetailsService = userDetailsService;
     }
 
-    @RequestMapping(value = "public/login", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest/*, Device device*/, HttpServletResponse response) throws AuthenticationException, JsonProcessingException {
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest /*,Device device*/, HttpServletResponse response) throws AuthenticationException, JsonProcessingException {
 
         // Effettuo l autenticazione
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()
+
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -66,7 +62,7 @@ public class AuthenticationRestController {
     }
 
 
-    @RequestMapping(value = "protected/refresh-token", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/refresh-token", method = RequestMethod.GET)
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader(tokenHeader);
         UserDetails userDetails =

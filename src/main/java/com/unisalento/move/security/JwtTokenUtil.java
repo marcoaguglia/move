@@ -2,11 +2,10 @@ package com.unisalento.move.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.unisalento.move.security.dto.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import com.unisalento.move.security.dto.JwtUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -158,7 +157,7 @@ public class JwtTokenUtil implements Serializable {
     public String generateToken(UserDetails userDetails/*, Device device*/) throws JsonProcessingException {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
-    //    claims.put(CLAIM_KEY_AUDIENCE, generateAudience(device));
+        //   claims.put(CLAIM_KEY_AUDIENCE, generateAudience(device));
         claims.put(CLAIM_KEY_CREATED, new Date());
         List<String> auth =userDetails.getAuthorities().stream().map(role-> role.getAuthority()).collect(Collectors.toList());
         claims.put(CLAIM_KEY_AUTHORITIES, auth);
