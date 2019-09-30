@@ -23,17 +23,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("api/users/addUsers")
+    @GetMapping("/api/users/addUsers")
     public String getAddUsers() {
         return "addUser";
     }
 
-    @GetMapping("api/users")
+    @GetMapping("/api/users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("api//users/{username}")
+    @GetMapping("/api/users/{username}")
     public User getUser(@PathVariable String username) {
         return userService.getUser(username);
     }
@@ -41,7 +41,7 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @PostMapping("api/users")
+    @PostMapping("/api/users")
     public ResponseEntity<Object> addUser(@RequestBody User user, UserRepository userRepository) {
 
 
@@ -63,7 +63,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping("api/users/{username}")
+    @DeleteMapping("/api/users/{username}")
     public User deleteUserById(@PathVariable String username) {
         User user = userService.deleteUser(username);
 
@@ -71,6 +71,13 @@ public class UserController {
             throw new UsernameNotFoundException("user-"+username);
 
         return user;
+    }
+
+    @PutMapping("/api/users/{id}")
+    public void updateUserById(@PathVariable String id, @RequestBody User user) {
+        User foundUser = userService.getUser(user.getUsername());
+        userService.saveUser(foundUser);
+
     }
 
 

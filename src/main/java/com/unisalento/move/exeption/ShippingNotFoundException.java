@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class SpedizioneNotFoundException extends RuntimeException {
+public class ShippingNotFoundException extends RuntimeException {
 
-    public SpedizioneNotFoundException(String message) {
+    public ShippingNotFoundException(String message) {
         super(message);
     }
 }

@@ -1,9 +1,11 @@
 package com.unisalento.move.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "Hub")
@@ -14,22 +16,69 @@ public class Hub implements Serializable{
 
 
     @Id
-    @GeneratedValue
-    @Column(name = "")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private String id;
-    @Column(name = "")
+    @Column(name = "lon")
     private String lon;
-    @Column(name = "")
+    @Column(name = "lat")
     private String lat;
+    @Column(name = "city")
+    private String city;
+    @Column(name = "country")
+    private String country;
 
+    @ManyToMany(mappedBy = "starts", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Set<Shipping> shipping_starts;
+
+
+    @ManyToMany(mappedBy = "ends", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Set<Shipping> shipping_ends;
 
     public Hub() {
     }
 
-    public Hub(String id, String lon, String lat) {
-        this.id = id;
+    public Hub(String lon, String lat, String city, String country, Set<Shipping> shipping_starts, Set<Shipping> shipping_ends) {
         this.lon = lon;
         this.lat = lat;
+        this.city = city;
+        this.country = country;
+        this.shipping_starts = shipping_starts;
+        this.shipping_ends = shipping_ends;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Set<Shipping> getShipping_starts() {
+        return shipping_starts;
+    }
+
+    public void setShipping_starts(Set<Shipping> shipping_starts) {
+        this.shipping_starts = shipping_starts;
+    }
+
+    public Set<Shipping> getShipping_ends() {
+        return shipping_ends;
+    }
+
+    public void setShipping_ends(Set<Shipping> shipping_ends) {
+        this.shipping_ends = shipping_ends;
     }
 
     public String getId() {

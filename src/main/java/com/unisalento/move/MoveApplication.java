@@ -54,7 +54,7 @@ public class MoveApplication {
                 authorityUser=authorityRepository.save(authorityUser);
 
                 Authority authorityRasp = new Authority();
-                authorityRasp.setName(AuthorityName.ROLE_RASP);
+                authorityRasp.setName(AuthorityName.ROLE_SMARTBOX);
                 authorityRasp = authorityRepository.save(authorityRasp);
 
                 Authority authorityManager = new Authority();

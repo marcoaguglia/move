@@ -1,31 +1,25 @@
 package com.unisalento.move.config;
 
-import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
-import springfox.documentation.builders.ApiInfoBuilder;
+import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@Configuration
 @EnableSwagger2
 public class swagger {
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
-                .paths(PathSelectors.any()).build().pathMapping("/api")
-                .apiInfo(apiInfo()).useDefaultResponseMessages(false);
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/api/**"))
+                .build();
     }
 
-    @Bean
-    ApiInfo apiInfo() {
-        final ApiInfoBuilder builder = new ApiInfoBuilder();
-        builder.title("Move API").version("1.0").license("(C) Copyright Move")
-                .description("List of all endpoints used in API");
-        return builder.build();
-    }
 }
+
 

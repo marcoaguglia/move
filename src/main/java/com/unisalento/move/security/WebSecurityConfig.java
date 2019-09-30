@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-   // configurazione Cors per poter consumare le api restful con richieste ajax
+    // configurazione Cors per poter consumare le /api restful con richieste ajax
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -87,33 +87,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js"
+                        "/**/*.js",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/v2/api-docs",
+                        "/webjars/**",
+                        "api"
                 ).permitAll()
-                .antMatchers(HttpMethod.GET, "api").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/").permitAll()
 
-                .antMatchers(HttpMethod.POST, "api/login/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login/**").permitAll()
 /***************RASP******************/
 
-                .antMatchers(HttpMethod.POST, "api/containers/**").hasAuthority("ROLE_RASP")
+                .antMatchers(HttpMethod.POST, "/api/containers/**").hasAuthority("ROLE_SMARTBOX")
 /***************USERS******************/
 
 
 /***************MANAGER******************/
-                .antMatchers("api/containers/**").hasAuthority("ROLE_MANAGER")
-                .antMatchers("api/hub/**").hasAuthority("ROLE_MANAGER")
-                .antMatchers("api/truck/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers("/api/containers/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers("/api/hub/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers("/api/truck/**").hasAuthority("ROLE_MANAGER")
 
-                .antMatchers(HttpMethod.DELETE, "api/users/**").hasAuthority("ROLE_MANAGER")
-                .antMatchers(HttpMethod.POST, "api/users/**").hasAuthority("ROLE_MANAGER")
-                .antMatchers(HttpMethod.PUT, "api/users/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ROLE_MANAGER")
+                .antMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("ROLE_MANAGER")
 /***************ADMIN******************/
 
-                .antMatchers("api/containers/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("api/hub/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("api/truck/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("api/users/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("api/users/**").hasAuthority("ROLE_ADMIN")
-
+                .antMatchers("/api/containers/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/containers/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/hub/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/truck/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/users/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/api/users/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/refresh-token").authenticated()
                 .anyRequest().authenticated();
 
         // Filtro Custom JWT

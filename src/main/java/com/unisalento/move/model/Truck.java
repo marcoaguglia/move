@@ -1,41 +1,39 @@
 package com.unisalento.move.model;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Track")
+@Table(name = "Truck")
 @Data
-public class Track implements Serializable {
+public class Truck implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private String id;
     @Column(name = "name")
     private String name;
+    @Temporal(TemporalType.TIME)
     @Column(name = "data")
-    private String time;
+    private Date time;
 
 
-
-    @OneToMany(mappedBy = "track")
-    private Set<Spedizione> spedizionesList = new HashSet<>();
-
+    @OneToMany(mappedBy = "truck")
+    private Set<Shipping> shippingsList = new HashSet<>();
 
 
-    public Track() {
+    public Truck() {
     }
 
-    public Track(String id, String name, String time) {
+    public Truck(String id, String name, Date time) {
         this.id = id;
         this.name = name;
         this.time = time;

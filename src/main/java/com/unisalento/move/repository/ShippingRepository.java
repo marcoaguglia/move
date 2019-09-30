@@ -1,6 +1,6 @@
 package com.unisalento.move.repository;
 
-import com.unisalento.move.model.Container;
+import com.unisalento.move.model.Shipping;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +10,10 @@ import java.util.Optional;
 @Repository
 @Transactional
 
-public interface ContainerRepository extends JpaRepository<Container, Long> {
-    Optional<Container> findById(String containerId);
+public interface ShippingRepository extends JpaRepository<Shipping, Long> {
+    Optional<Shipping> findById(String shippingId);
 
-    void deleteById(String containerId);
+    void deleteById(String shippingId);
+
 
 }

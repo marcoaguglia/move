@@ -21,12 +21,12 @@ public class HubController {
         this.hubService = hubService;
     }
 
-    @GetMapping("api/protected/hubs")
+    @GetMapping("/api/hubs")
     public List<Hub> getAllDevices() {
         return hubService.getAllHubs();
     }
 
-    @GetMapping("api/protected/hubs/{id}")
+    @GetMapping("/api/hubs/{id}")
     public Hub getDeviceById(@PathVariable String id) {
         Hub hub = hubService.getHubById(id);
 
@@ -36,7 +36,7 @@ public class HubController {
         return hub;
     }
 
-    @PostMapping("api/protected/hubs")
+    @PostMapping("/api/hubs")
     public ResponseEntity<Object> addHub(@RequestBody Hub hub) {
         Hub createdHub = hubService.saveHub(hub);
 
@@ -50,7 +50,7 @@ public class HubController {
     }
 
 
-    @DeleteMapping("api/hubs/{id}")
+    @DeleteMapping("/api/hubs/{id}")
     public Hub deleteHubById(@PathVariable String id) {
         Hub hub = hubService.deleteHub(id);
 
@@ -60,8 +60,8 @@ public class HubController {
         return hub;
     }
 
-    @PutMapping("api/hubs/{id}")
-    public void deleteHubById(@PathVariable String id, @RequestBody Hub hub) {
+    @PutMapping("/api/hubs/{id}")
+    public void updateHubById(@PathVariable String id, @RequestBody Hub hub) {
         Hub foundHub = hubService.getHubById(id);
 
         if (foundHub == null)
