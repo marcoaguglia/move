@@ -1,5 +1,6 @@
 package com.unisalento.move.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -75,18 +76,16 @@ public class Container implements Serializable {
     @Column(name = "rh_cell_5")
     private String rh_cell_5;
 
-    @OneToMany(mappedBy = "container_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "container_id", targetEntity = Shipping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("container_id")
     private Set<Shipping> shipping_id = new HashSet<>();
-
-
-
 
     public Container() {
     }
 
-    public Container(Date date, String container_id, String contact_sensor, String mems, String pir, String shock_sensor, String brightness_sensor, String out_temp, String ins_temp, String ins_rh, String lat, String lon, String temp_cell_1, String temp_cell_2, String temp_cell_3, String temp_cell_4, String temp_cell_5, String rh_cell_1, String rh_cell_2, String rh_cell_3, String rh_cell_4, String rh_cell_5, Set<Shipping> shipping) {
+    public Container(Date date, String contact_sensor, String mems, String pir, String shock_sensor, String brightness_sensor, String out_temp, String ins_temp, String ins_rh, String lat, String lon, String temp_cell_1, String temp_cell_2, String temp_cell_3, String temp_cell_4, String temp_cell_5, String rh_cell_1, String rh_cell_2, String rh_cell_3, String rh_cell_4, String rh_cell_5, Set<Shipping> shipping) {
         this.date = date;
-        this.container_id = container_id;
         this.contact_sensor = contact_sensor;
         this.mems = mems;
         this.pir = pir;
@@ -124,14 +123,6 @@ public class Container implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getContainer_id() {
-        return container_id;
-    }
-
-    public void setContainer_id(String container_id) {
-        this.container_id = container_id;
     }
 
     public String getContact_sensor() {
@@ -298,7 +289,7 @@ public class Container implements Serializable {
         return shipping_id;
     }
 
-    public void setShipping(Set<Shipping> shipping) {
-        this.shipping_id = shipping;
+    public void setShipping(Set<Shipping> shipping_id) {
+        this.shipping_id = shipping_id;
     }
 }

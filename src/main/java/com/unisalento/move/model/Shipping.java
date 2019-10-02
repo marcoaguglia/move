@@ -1,6 +1,7 @@
 package com.unisalento.move.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -44,12 +45,12 @@ public class Shipping implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "city_id", referencedColumnName = "id")})
     private Set<Hub> ends;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Container.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "container_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("shipping_id")
     private Container container_id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "truck_id")
     @JsonIgnore
     private Truck truck;
@@ -100,16 +101,16 @@ public class Shipping implements Serializable {
         this.temp = temp;
     }
 
-    public Set<Hub> getStarts() {
-        return starts;
+    public String getStarts() {
+        return starts.iterator().next().getId();
     }
 
     public void setStarts(Set<Hub> starts) {
         this.starts = starts;
     }
 
-    public Set<Hub> getEnds() {
-        return ends;
+    public String getEnds() {
+        return ends.iterator().next().getId();
     }
 
     public void setEnds(Set<Hub> ends) {
