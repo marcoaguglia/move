@@ -78,7 +78,6 @@ public class Container implements Serializable {
 
 
     @OneToMany(mappedBy = "container_id", targetEntity = Shipping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("container_id")
     private Set<Shipping> shipping_id = new HashSet<>();
 
     public Container() {

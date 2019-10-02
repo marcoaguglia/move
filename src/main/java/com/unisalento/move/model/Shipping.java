@@ -47,7 +47,7 @@ public class Shipping implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Container.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "container_id", referencedColumnName = "id")
-    @JsonIgnoreProperties("shipping_id")
+    @JsonIgnore()
     private Container container_id;
 
     @ManyToOne()
