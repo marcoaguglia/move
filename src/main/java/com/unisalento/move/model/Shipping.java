@@ -1,8 +1,6 @@
 package com.unisalento.move.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -47,21 +45,28 @@ public class Shipping implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "city_id", referencedColumnName = "id")})
     private Set<Hub> ends;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Container.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "container_id", referencedColumnName = "id")
-    @JsonBackReference(value = "cont")
-    private Container container;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Shipping_update",
+            joinColumns = {@JoinColumn(name = "shipping_update_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "container_id", referencedColumnName = "id")})
+    private Set<Container> container;
+    /*
+        @ManyToOne(fetch = FetchType.EAGER, targetEntity = Container.class, cascade = CascadeType.ALL)
+        @JoinColumn(name = "container_id", referencedColumnName = "id")
+        @JsonBackReference(value = "cont")
+        private Container container;
+    */
     @ManyToOne()
-    @JoinColumn(name = "truck_id")
-    @JsonIgnore
+    @JoinColumn(name = "truck_id", referencedColumnName = "id")
     private Truck truck;
 
 
     public Shipping() {
     }
 
-    public Shipping(Date data, String id, String temp, Set<Hub> starts, Set<Hub> ends, Container container, Truck truck) {
+    public Shipping(Date data, String id, String temp, Set<Hub> starts, Set<Hub> ends, Set<Container> container, Truck truck) {
         this.data = data;
         this.id = id;
         this.temp = temp;
@@ -103,27 +108,27 @@ public class Shipping implements Serializable {
         this.temp = temp;
     }
 
-    public String getStarts() {
-        return starts.iterator().next().getId();
+    public Set<Hub> getStarts() {
+        return starts;
     }
 
     public void setStarts(Set<Hub> starts) {
         this.starts = starts;
     }
 
-    public String getEnds() {
-        return ends.iterator().next().getId();
+    public Set<Hub> getEnds() {
+        return ends;
     }
 
     public void setEnds(Set<Hub> ends) {
         this.ends = ends;
     }
 
-    public Container getContainer_id() {
+    public Set<Container> getContainer_id() {
         return container;
     }
 
-    public void setContainer_id(Container container) {
+    public void setContainer_id(Set<Container> container) {
         this.container = container;
     }
 

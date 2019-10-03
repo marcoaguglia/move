@@ -29,12 +29,12 @@ public class Hub implements Serializable{
     private String country;
 
     @ManyToMany(mappedBy = "starts", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value = "shipping_starts")
     private Set<Shipping> shipping_starts;
 
 
-    @ManyToMany(mappedBy = "ends", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @ManyToMany(mappedBy = "ends", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference(value = "shipping_ends")
     private Set<Shipping> shipping_ends;
 
     public Hub() {

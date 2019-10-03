@@ -1,14 +1,13 @@
 package com.unisalento.move.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -80,11 +79,15 @@ public class Container implements Serializable {
     @Column(name = "rh_cell_5")
     private String rh_cell_5;
 
+    @ManyToMany(mappedBy = "container", fetch = FetchType.LAZY)
+    @JsonBackReference(value = "shipping")
+    private Set<Shipping> shipping;
 
-    @OneToMany(mappedBy = "container", targetEntity = Shipping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "cont")
-    private Set<Shipping> shipping = new HashSet<>();
-
+    /*
+        @OneToMany(mappedBy = "container", targetEntity = Shipping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+        @JsonManagedReference(value = "cont")
+        private Set<Shipping> shipping = new HashSet<>();
+    */
     public Container() {
     }
 
