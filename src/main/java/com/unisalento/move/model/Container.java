@@ -1,7 +1,9 @@
 package com.unisalento.move.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Container")
-@Data
+@JsonIgnoreProperties("shipping")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Container implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
@@ -20,6 +24,7 @@ public class Container implements Serializable {
     private Date date;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private String id;
 
@@ -64,7 +69,6 @@ public class Container implements Serializable {
     private String temp_cell_4;
     @Column(name = "temp_cell_5")
     private String temp_cell_5;
-
     @Column(name = "rh_cell_1")
     private String rh_cell_1;
     @Column(name = "rh_cell_2")
@@ -77,13 +81,14 @@ public class Container implements Serializable {
     private String rh_cell_5;
 
 
-    @OneToMany(mappedBy = "container_id", targetEntity = Shipping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Shipping> shipping_id = new HashSet<>();
+    @OneToMany(mappedBy = "container", targetEntity = Shipping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "cont")
+    private Set<Shipping> shipping = new HashSet<>();
 
     public Container() {
     }
 
-    public Container(Date date, String contact_sensor, String mems, String pir, String shock_sensor, String brightness_sensor, String out_temp, String ins_temp, String ins_rh, String lat, String lon, String temp_cell_1, String temp_cell_2, String temp_cell_3, String temp_cell_4, String temp_cell_5, String rh_cell_1, String rh_cell_2, String rh_cell_3, String rh_cell_4, String rh_cell_5, Set<Shipping> shipping) {
+    public Container(String container_id, Date date, String contact_sensor, String mems, String pir, String shock_sensor, String brightness_sensor, String out_temp, String ins_temp, String ins_rh, String lat, String lon, String temp_cell_1, String temp_cell_2, String temp_cell_3, String temp_cell_4, String temp_cell_5, String rh_cell_1, String rh_cell_2, String rh_cell_3, String rh_cell_4, String rh_cell_5, Set<Shipping> shipping) {
         this.date = date;
         this.contact_sensor = contact_sensor;
         this.mems = mems;
@@ -105,9 +110,17 @@ public class Container implements Serializable {
         this.rh_cell_3 = rh_cell_3;
         this.rh_cell_4 = rh_cell_4;
         this.rh_cell_5 = rh_cell_5;
-        this.shipping_id = shipping;
+        this.shipping = shipping;
+        this.container_id = container_id;
     }
 
+    public String getContainer_id() {
+        return container_id;
+    }
+
+    public void setContainer_id(String container_id) {
+        this.container_id = container_id;
+    }
     public Date getDate() {
         return date;
     }
@@ -285,10 +298,10 @@ public class Container implements Serializable {
     }
 
     public Set<Shipping> getShipping() {
-        return shipping_id;
+        return shipping;
     }
 
-    public void setShipping(Set<Shipping> shipping_id) {
-        this.shipping_id = shipping_id;
+    public void setShipping(Set<Shipping> shipping) {
+        this.shipping = shipping;
     }
 }

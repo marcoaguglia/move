@@ -1,8 +1,9 @@
 package com.unisalento.move.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,13 +12,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "spedizione")
-@Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Shipping implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "tratta")
     private String tratta;
 
@@ -25,7 +25,9 @@ public class Shipping implements Serializable {
     @Column(name = "data")
     private Date data;
 
+    @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @Column(name = "temp")
@@ -47,8 +49,8 @@ public class Shipping implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Container.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "container_id", referencedColumnName = "id")
-    @JsonIgnore()
-    private Container container_id;
+    @JsonBackReference(value = "cont")
+    private Container container;
 
     @ManyToOne()
     @JoinColumn(name = "truck_id")
@@ -59,13 +61,13 @@ public class Shipping implements Serializable {
     public Shipping() {
     }
 
-    public Shipping(Date data, String id, String temp, Set<Hub> starts, Set<Hub> ends, Container container_id, Truck truck) {
+    public Shipping(Date data, String id, String temp, Set<Hub> starts, Set<Hub> ends, Container container, Truck truck) {
         this.data = data;
         this.id = id;
         this.temp = temp;
         this.starts = starts;
         this.ends = ends;
-        this.container_id = container_id;
+        this.container = container;
         this.truck = truck;
     }
 
@@ -118,11 +120,11 @@ public class Shipping implements Serializable {
     }
 
     public Container getContainer_id() {
-        return container_id;
+        return container;
     }
 
-    public void setContainer_id(Container container_id) {
-        this.container_id = container_id;
+    public void setContainer_id(Container container) {
+        this.container = container;
     }
 
     public Truck getTruck() {
