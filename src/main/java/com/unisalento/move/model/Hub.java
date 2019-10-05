@@ -1,9 +1,10 @@
 package com.unisalento.move.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,12 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Hub")
-@Data
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id",
-        resolver = EntityIdResolver.class,
-        scope = Hub.class)
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,7 +24,7 @@ public class Hub implements Serializable{
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private String id;
     @Column(name = "lon")
@@ -40,13 +36,15 @@ public class Hub implements Serializable{
     @Column(name = "country")
     private String country;
 
-    @ManyToMany(mappedBy = "starts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference(value = "shipping_starts")
+    @OneToMany(mappedBy = "starts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    // @JsonBackReference(value = "shipping_starts")
     private Set<Shipping> shipping_starts;
 
 
-    @ManyToMany(mappedBy = "ends", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference(value = "shipping_ends")
+    @OneToMany(mappedBy = "ends", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //  @JsonBackReference(value = "shipping_ends")
+    @JsonIgnore
     private Set<Shipping> shipping_ends;
 
 

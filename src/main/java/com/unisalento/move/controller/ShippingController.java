@@ -4,7 +4,6 @@ import com.unisalento.move.exeption.ShippingNotFoundException;
 import com.unisalento.move.model.Shipping;
 import com.unisalento.move.service.ShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -38,7 +37,7 @@ public class ShippingController {
     }
 
 
-    @PostMapping(value = "/api/shippings", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/api/shippings")
     public ResponseEntity<Object> addShipping(@RequestBody Shipping shipping) {
         Shipping test = new Shipping();
         test.setId(shipping.getId());

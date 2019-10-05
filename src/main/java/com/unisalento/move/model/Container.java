@@ -1,9 +1,6 @@
 package com.unisalento.move.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Container")
-@JsonIgnoreProperties("shipping")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id",
-        resolver = EntityIdResolver.class,
-        scope = Container.class)
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -96,10 +88,5 @@ public class Container implements Serializable {
     @JsonBackReference(value = "shipping")
     private Set<Shipping> shipping;
 
-    /*
-        @OneToMany(mappedBy = "container", targetEntity = Shipping.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-        @JsonManagedReference(value = "cont")
-        private Set<Shipping> shipping = new HashSet<>();
-    */
 
 }
