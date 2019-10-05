@@ -56,17 +56,5 @@ public class Shipping implements Serializable {
     @JoinColumn(name = "truck_id", referencedColumnName = "id")
     private Truck truck;
 
-
-    @Override
-    public String toString() {
-        return "{" + "tratta=" + tratta + "," +
-                " id=" + id + ", start_id=" +
-                starts.getId() +
-                ", ends_id=" +
-                ends.getId() +
-                ", container=" +
-                container +
-                ", truck_id=" +
-                truck.getId() + '}';
-    }
+    
 }
