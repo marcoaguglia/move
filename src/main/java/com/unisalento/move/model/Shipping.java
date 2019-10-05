@@ -31,14 +31,14 @@ public class Shipping implements Serializable {
     @Column(name = "temp")
     private String temp;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "Departure",
             joinColumns = {@JoinColumn(name = "shipping_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "city_id", referencedColumnName = "id")})
     private Set<Hub> starts;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "Arrival",
             joinColumns = {@JoinColumn(name = "shipping_id", referencedColumnName = "id")},
@@ -58,7 +58,7 @@ public class Shipping implements Serializable {
         @JsonBackReference(value = "cont")
         private Container container;
     */
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "truck_id", referencedColumnName = "id")
     private Truck truck;
 

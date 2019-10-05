@@ -1,5 +1,7 @@
 package com.unisalento.move.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +13,11 @@ import java.util.Set;
 @Entity
 @Table(name = "Truck")
 @Data
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = EntityIdResolver.class,
+        scope = Truck.class)
 public class Truck implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
@@ -26,7 +33,7 @@ public class Truck implements Serializable {
     private Date time;
 
 
-    @OneToMany(mappedBy = "truck")
+    @OneToMany(mappedBy = "truck", cascade = CascadeType.ALL)
     private Set<Shipping> shippingsList = new HashSet<>();
 
 

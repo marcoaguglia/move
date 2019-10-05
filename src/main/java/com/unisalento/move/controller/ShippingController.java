@@ -14,8 +14,8 @@ import java.util.List;
 
 @RestController
 public class ShippingController {
-
     private final ShippingService shippingService;
+
 
     @Autowired
     public ShippingController(ShippingService shippingService) {
@@ -40,7 +40,10 @@ public class ShippingController {
 
     @PostMapping(value = "/api/shippings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addShipping(@RequestBody Shipping shipping) {
-        Shipping createdShipping = shippingService.saveShipping(shipping);
+        Shipping test = new Shipping();
+        test.setId(shipping.getId());
+        test.setTruck(shipping.getTruck());
+        Shipping createdShipping = shippingService.saveShipping(test);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

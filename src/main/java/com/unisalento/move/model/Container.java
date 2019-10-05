@@ -13,8 +13,11 @@ import java.util.Set;
 @Entity
 @Table(name = "Container")
 @JsonIgnoreProperties("shipping")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = EntityIdResolver.class,
+        scope = Container.class)
 public class Container implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
@@ -79,7 +82,7 @@ public class Container implements Serializable {
     @Column(name = "rh_cell_5")
     private String rh_cell_5;
 
-    @ManyToMany(mappedBy = "container", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "container", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference(value = "shipping")
     private Set<Shipping> shipping;
 
