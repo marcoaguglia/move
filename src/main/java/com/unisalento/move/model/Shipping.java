@@ -2,6 +2,10 @@ package com.unisalento.move.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +15,11 @@ import java.util.Set;
 @Entity
 @Table(name = "spedizione")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Shipping implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
@@ -62,81 +71,4 @@ public class Shipping implements Serializable {
     @JoinColumn(name = "truck_id", referencedColumnName = "id")
     private Truck truck;
 
-
-    public Shipping() {
-    }
-
-    public Shipping(Date data, String id, String temp, Set<Hub> starts, Set<Hub> ends, Set<Container> container, Truck truck) {
-        this.data = data;
-        this.id = id;
-        this.temp = temp;
-        this.starts = starts;
-        this.ends = ends;
-        this.container = container;
-        this.truck = truck;
-    }
-
-    public String getTratta() {
-        return tratta;
-    }
-
-    public void setTratta(String tratta) {
-        this.tratta = tratta;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTemp() {
-        return temp;
-    }
-
-    public void setTemp(String temp) {
-        this.temp = temp;
-    }
-
-    public Set<Hub> getStarts() {
-        return starts;
-    }
-
-    public void setStarts(Set<Hub> starts) {
-        this.starts = starts;
-    }
-
-    public Set<Hub> getEnds() {
-        return ends;
-    }
-
-    public void setEnds(Set<Hub> ends) {
-        this.ends = ends;
-    }
-
-    public Set<Container> getContainer_id() {
-        return container;
-    }
-
-    public void setContainer_id(Set<Container> container) {
-        this.container = container;
-    }
-
-    public Truck getTruck() {
-        return truck;
-    }
-
-    public void setTruck(Truck truck) {
-        this.truck = truck;
-    }
 }

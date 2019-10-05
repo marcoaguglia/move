@@ -2,7 +2,7 @@ package com.unisalento.move.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +18,12 @@ import java.util.Set;
         property = "id",
         resolver = EntityIdResolver.class,
         scope = Truck.class)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
+
 public class Truck implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
@@ -35,15 +41,5 @@ public class Truck implements Serializable {
 
     @OneToMany(mappedBy = "truck", cascade = CascadeType.ALL)
     private Set<Shipping> shippingsList = new HashSet<>();
-
-
-    public Truck() {
-    }
-
-    public Truck(String id, String name, Date time) {
-        this.id = id;
-        this.name = name;
-        this.time = time;
-    }
-
+    
 }

@@ -41,7 +41,7 @@ public class AuthenticationRestController {
     }
 
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest /*,Device device*/, HttpServletResponse response) throws AuthenticationException, JsonProcessingException {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) throws AuthenticationException, JsonProcessingException {
 
         // Effettuo l autenticazione
         final Authentication authentication = authenticationManager.authenticate(
@@ -55,7 +55,7 @@ public class AuthenticationRestController {
 
         // Genero Token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        final String token = jwtTokenUtil.generateToken(userDetails /*,device*/);
+        final String token = jwtTokenUtil.generateToken(userDetails);
         response.setHeader(tokenHeader,token);
         // Ritorno il token
         return ResponseEntity.ok(new JwtAuthenticationResponse(userDetails.getUsername(),userDetails.getAuthorities()));
