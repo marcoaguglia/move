@@ -22,8 +22,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 public class Truck implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;

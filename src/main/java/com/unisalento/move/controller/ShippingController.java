@@ -39,10 +39,8 @@ public class ShippingController {
 
     @PostMapping(value = "/api/shippings")
     public ResponseEntity<Object> addShipping(@RequestBody Shipping shipping) {
-        Shipping test = new Shipping();
-        test.setId(shipping.getId());
-        test.setTruck(shipping.getTruck());
-        Shipping createdShipping = shippingService.saveShipping(test);
+
+        Shipping createdShipping = shippingService.saveShipping(shipping);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

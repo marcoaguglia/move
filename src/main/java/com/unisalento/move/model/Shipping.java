@@ -1,5 +1,6 @@
 package com.unisalento.move.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,9 +13,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "spedizione")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 public class Shipping implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
@@ -33,10 +35,13 @@ public class Shipping implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "starts_id", referencedColumnName = "id")
+
     private Hub starts;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ends_id", referencedColumnName = "id")
     private Hub ends;
 
 
@@ -51,4 +56,17 @@ public class Shipping implements Serializable {
     @JoinColumn(name = "truck_id", referencedColumnName = "id")
     private Truck truck;
 
+
+    @Override
+    public String toString() {
+        return "{" + "tratta=" + tratta + "," +
+                " id=" + id + ", start_id=" +
+                starts.getId() +
+                ", ends_id=" +
+                ends.getId() +
+                ", container=" +
+                container +
+                ", truck_id=" +
+                truck.getId() + '}';
+    }
 }

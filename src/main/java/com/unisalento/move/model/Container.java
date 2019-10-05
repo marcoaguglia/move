@@ -13,13 +13,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Container")
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 public class Container implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
