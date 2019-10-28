@@ -35,12 +35,12 @@ public class Shipping implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "starts_id", referencedColumnName = "id")
 
     private Hub starts;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "ends_id", referencedColumnName = "id")
     private Hub ends;
 

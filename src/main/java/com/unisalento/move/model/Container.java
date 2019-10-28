@@ -20,6 +20,7 @@ import java.util.Set;
 public class Container implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;

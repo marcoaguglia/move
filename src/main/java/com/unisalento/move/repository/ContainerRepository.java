@@ -9,10 +9,9 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-
 public interface ContainerRepository extends JpaRepository<Container, Long> {
+
     Optional<Container> findById(String containerId);
 
     void deleteById(String containerId);
-
 }

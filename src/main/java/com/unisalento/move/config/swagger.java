@@ -19,7 +19,6 @@ public class swagger {
                 .paths(PathSelectors.ant("/api/**"))
                 .build();
     }
-
 }
 
 

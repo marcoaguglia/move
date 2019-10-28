@@ -23,12 +23,10 @@ import java.util.List;
 @SpringBootApplication
 public class MoveApplication {
 
-
     @Autowired
     private DataSource datasource;
     @Autowired
     private ApplicationContext webApplicationContext;
-
     @Autowired
     PasswordEncoder passwordEncoder;
 
